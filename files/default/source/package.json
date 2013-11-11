@@ -1,0 +1,23 @@
+{
+  "name": "ics-session",
+  "version": "0.0.1",
+  "description": "Session service for the iCornerstone Platform",
+  "main": "server.js",
+  "dependencies" : {
+	"express" : "3.4.x",
+	"request" : "2.27.x",
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/iCornerstoneTeam/ics-service.git"
+  },
+  "author": "John Manero <john.manero@gmail.com>",
+  "license": "Private",
+  "bugs": {
+    "url": "https://github.com/iCornerstoneTeam/ics-service/issues"
+  }
+}
