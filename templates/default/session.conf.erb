@@ -1,0 +1,11 @@
+#!upstart
+description "iCornerstone Session Service"
+author      "John Manero <jmanero@dyn.com>"
+
+start on startup
+stop on shutdown
+
+setuid <%= node["ics_session"]["user"] %>
+console log
+chdir <%= node["ics_session"]["home"] %>
+exec <%= node["ics_session"]["home"] %>/server.js

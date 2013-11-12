@@ -1,13 +1,3 @@
-# init cookbook
-
-# Requirements
-
-# Usage
-
-# Attributes
-
-# Recipes
-
-# Author
-
+iCS Service
+===========
 Author:: John Manero (<jmanero@dyn.com>)
