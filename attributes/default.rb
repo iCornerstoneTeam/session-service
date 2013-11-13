@@ -1,4 +1,4 @@
 
-default["ics_session"]["user"] = "session"
-default["ics_session"]["group"] = "session"
-default["ics_session"]["home"] = "/srv/session"
+default["session_service"]["user"] = "session"
+default["session_service"]["group"] = "session"
+default["session_service"]["home"] = "/srv/session"

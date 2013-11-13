@@ -7,7 +7,8 @@
 	"express" : "3.4.x",
 	"memcached" : "0.2.x",
 	"request" : "2.27.x",
-	"winston" : "0.7.x"
+	"winston" : "0.7.x",
+	"ics-utils" : "https://github.com/iCornerstoneTeam/ics-utils/archive/master.tar.gz"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

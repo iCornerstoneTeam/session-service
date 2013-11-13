@@ -5,7 +5,7 @@ author      "John Manero <jmanero@dyn.com>"
 start on startup
 stop on shutdown
 
-setuid <%= node["ics_session"]["user"] %>
+setuid <%= node["session_service"]["user"] %>
 console log
-chdir <%= node["ics_session"]["home"] %>
-exec <%= node["ics_session"]["home"] %>/server.js
+chdir <%= node["session_service"]["home"] %>
+exec <%= node["session_service"]["home"] %>/server.js

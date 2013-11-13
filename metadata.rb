@@ -1,4 +1,4 @@
-name             'ics_session'
+name             'session_service'
 maintainer       'John Manero'
 maintainer_email 'jmanero@dyn.com'
 license          'All rights reserved'
