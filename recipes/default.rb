@@ -40,7 +40,7 @@ directory node["session_service"]["home"] do
 end
 
 template "/etc/init/session.conf" do
-  source "session.conf.erb"
+  source "upstart.conf.erb"
   backup false
 end
 
@@ -60,8 +60,8 @@ end
 
 execute "npm install" do
   cwd node["session_service"]["home"]
-  user node["session_service"]["user"]
-  group node["session_service"]["group"]
+  user node["environment"] == "vagrant" ? "vagrant" : node["session_service"]["user"]
+  group node["environment"] == "vagrant" ? "vagrant" : node["session_service"]["group"]
   environment({
     "HOME" => node["session_service"]["home"]
   })

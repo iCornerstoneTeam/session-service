@@ -1,9 +1,9 @@
 /**
  * Model: Session
  */
-var Memcached = require("Memcached");
+var Memcached = require("memcached");
 var store = new Memcached("localhost:11211");
-var nothing = function() {};
+function nothing() {};
 
 var Session = module.exports = function(id, isNew) {
     Object.defineProperty(this, "id", {
@@ -19,12 +19,18 @@ var Session = module.exports = function(id, isNew) {
         writable : true
     });
 
-    this.expires = +(this.expires) || 3600;
+    this.expires = +(this.expires) || 3600000;
     this.data = this.data || {};
 };
 
-Session.get = function(id, callback) {
+Session.get = function(id, options, callback) {
+    if(typeof options === "function") {
+        callback = options;
+        options = {};
+    }
     callback = typeof callback === "function" ? callback : nothing;
+    options = options || {};
+    
     store.get(id, function(e, session) {
         if (e)
             return callback(e);
@@ -33,15 +39,21 @@ Session.get = function(id, callback) {
             try { // Instantiate Session object
                 session = JSON.parse(session.toString("utf8"));
                 Session.call(session, id, false);
-                session.__proto__ = session.prototype;
+                session.__proto__ = Session.prototype;
+                if(options.expires)
+                    session.expires = options.expires;
 
                 return callback(null, session);
             } catch (e) {
+                console.log(e.stack);
             }
         }
 
         // Non-existent session or corrupted data
-        callback(null, new Session(id));
+        session = new Session(id);
+        if(options.expires)
+            session.expires = options.expires;
+        callback(null, session);
     });
 };
 
@@ -53,12 +65,19 @@ Session.prototype.authenticated = function() {
     return this.user && this.token;
 };
 
-Session.prototype.touch = function(callback) {
-    store.touch(this.id, this.expires,
+Session.prototype.touch = function(expires, callback) {
+    if(typeof expires === "function")
+        callback = expires;
+    else if(+expires)
+        this.expires = expires;
+    
+    this.touched = Date.now();
+    store.touch(this.id, this.expires / 1000,
         (typeof callback === "function" ? callback : nothing));
 };
 
 Session.prototype.save = function(callback) {
-    store.set(this.id, JSON.stringify(this), this.expires,
+    this.touched = Date.now();    
+    store.set(this.id, JSON.stringify(this), this.expires / 1000,
         (typeof callback === "function" ? callback : nothing));
 };

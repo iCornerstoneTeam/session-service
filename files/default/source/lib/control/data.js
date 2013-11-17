@@ -6,7 +6,7 @@ var Session = require("../model/session");
 
 exports.route = function(app) {
     app.get("/session/:id/data", function(req, res, next) {
-        Session.get(req.params.id, function(e, session) {
+        Session.get(req.params.id, req.query, function(e, session) {
             if (e)
                 return next(e);
 
@@ -23,7 +23,7 @@ exports.route = function(app) {
     });
 
     app.put("/session/:id/data", function(req, res, next) {
-        Session.get(req.params.id, function(e, session) {
+        Session.get(req.params.id, req.query, function(e, session) {
             if (e)
                 return next(e);
             
